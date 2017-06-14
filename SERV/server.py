@@ -1,44 +1,46 @@
 #!/usr/bin/env python
 
 import Pyro4
+import sys
+import os
 
 @Pyro4.expose
-
+#################################################################  Natalia Zdrowak
 class Serv:
 	def __init__(self, daemon):
         	self.daemon = daemon
 
-	def wysylanie(self,msg):
+
+	def wysylanie(self):
+	 	name=raw_input('Nazwa programu do wyslania: ')
+		name1=name+'.py'
 		
-		p = open('program.py')
-		try:
+		try:	
+			with open(name1) as file:
+        			pass
+			p = open(name1)
 			kod = p.read()
-		finally:
 			p.close()
-		print('Klient: {}'.format(msg))
-        	
+ 
+		except IOError as e:
+			print name1 + ' - Plik nie istnieje'	
+			kod='Blad'
+		
+			
 		return kod
-	
-	
-	#def polaczenie(self):
- 		
-		#daemon = Pyro4.Daemon()
-		#ns= Pyro4.locateNS();
-		#uri = daemon.register(Witaj)
-		#ns.register("obj.witaj",uri)
-		#print(uri)
-		#daemon.requestLoop()
 
-	#def odp(self,od):
-		#print('client said {}'.format(od))
-        	#return 'hola'
+
+	def mess(self, msg):
+		print('Klient {}'.format(msg))
 	
 		
 
 
-def main():
+def main(argv):
+	karta=sys.argv[1]
+	ip = os.popen('ip addr show '+karta).read().split("inet ")[1].split("/")[0] #pobiera ip // enp0s3 zamienic na eth0 lub odpowiadajacy karcie danego komutera
 	
-	daemon = Pyro4.Daemon(port=9990)
+	daemon = Pyro4.Daemon(ip,port=9990)
    	serv = Serv(daemon)
     	uri = daemon.register(serv, objectId='Server')
     	print(uri)
@@ -47,4 +49,4 @@ def main():
 	
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])

@@ -1,10 +1,7 @@
 #!/usr/bin/env python
-
-a=5
 b=6
-c=a+b
-print a
-print b
+z=5
+c='ala'
+print b+z
 print c
-
 
