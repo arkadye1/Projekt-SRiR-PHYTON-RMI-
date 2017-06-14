@@ -31,6 +31,7 @@ class Wynik:
 				p.write(odpow)
 				remote.mess(myip+": Zapisano Program ")
 				p.close()
+				print "Zapisano poprawinie"
 			else:
 				print 'Wystapil blad. Sprobuj pobrac program jeszcze raz'
 
@@ -70,8 +71,10 @@ class Wynik:
 					p.close()
 	
 				remote.mess(myip+': Raport porownawczy (powtarzajace sie linie kodu) \n{}'.format(rap))
+				print "Powtarzajace sie linie kodu:"
+				print (format(rap))
 				
-				print "Raport wyslany"
+				print "Raport wyslany!"
 			except IOError as e:
 				print  'Blad. Nieprawidlowa nazwa ktoregos z plikow'	
 				
@@ -83,9 +86,7 @@ class Wynik:
 			remote.mess("***KONIEC POLACZENIA*** - "+myip)
 			
    			break	
-		elif n or n!=1 or n!=2 or n!=3 or n!=4:
-
-			print "Wybierz jeszcze raz"		
+			
 
 ################################################################################# Arkadiusz Wojcik
 
@@ -105,8 +106,9 @@ def main(argv):
  		uri = 'PYRO:Server@'+ipv4+':9990'
 		#x=Pyro4.Proxy("PYRONAME:obj.witaj")
 		remote = Pyro4.Proxy(uri)
-		print '***NAWIAZANO POLACZENIE***'
+		
 		remote.mess("***NAWIAZANO POLACZENIE*** " + myip)
+		print '***NAWIAZANO POLACZENIE***'
 		wynik.zadania(remote)
 
 	

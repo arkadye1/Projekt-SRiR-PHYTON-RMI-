@@ -40,11 +40,14 @@ def main(argv):
 	karta=sys.argv[1]
 	ip = os.popen('ip addr show '+karta).read().split("inet ")[1].split("/")[0] #pobiera ip // enp0s3 zamienic na eth0 lub odpowiadajacy karcie danego komutera
 	
-	daemon = Pyro4.Daemon(ip,port=9990)
-   	serv = Serv(daemon)
-    	uri = daemon.register(serv, objectId='Server')
-    	print(uri)
-    	daemon.requestLoop()
+	if len(sys.argv) != 2:
+		print 'Za duzo argumentow wejsciowych'
+	else:
+		daemon = Pyro4.Daemon(ip,port=9990)
+   		serv = Serv(daemon)
+    		uri = daemon.register(serv, objectId='Server')
+    		print(uri)
+    		daemon.requestLoop()
 	
 	
 
